@@ -7,3 +7,7 @@
 meteor-platform
 autopublish
 insecure
+iron:router
+twbs:bootstrap
+sacha:spin
+msavin:mongol
