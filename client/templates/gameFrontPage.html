@@ -1,0 +1,19 @@
+<template name="gameFrontPage">
+  <h1>This is the game front page: {{name}}</h1>
+  <div>
+    {{#if isOwner}}
+      {{#if readyToPlay}}
+        {{#each players}}
+          <h4>{{username}} has joined...</h4>
+        {{/each}}
+        <h3>You have enough players so get to it!</h3>
+      {{else}}
+        <h3>Waiting for some other players to join.</h3>
+      {{/if}}
+    {{else}}
+      <h3>Be patient, we're waiting for {{owner.username}} to start the game...</h3>
+      <a href="{{pathFor 'frontPage'}}" class="btn btn-danger">End Game</a>
+    {{/if}}
+
+  </div>
+</template>

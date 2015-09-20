@@ -1,5 +1,16 @@
 <template name="game">
-  <h1>Game</h1>
-  <div>{{name}}</div>
-  <a href="{{pathFor 'gamePage'}}" class="btn btn-default">Join</a>
+  <div class="row">
+    <div class="col-md-2">Game: {{name}}</div>
+    <div class="col-md-2">Games Master: {{owner.username}}</div>
+    <div class="col-md-2">Players:{{#each players}} {{username}} {{/each}}</div>
+    <div class="col-md-4">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Your Name">
+        </div>
+        <button type="submit" class="btn btn-success">Join Game</button>
+      </form>
+    </div>
+  </div>
 </template>

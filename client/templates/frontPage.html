@@ -1,9 +1,14 @@
 <template name="frontPage">
 
-    <h1>Games</h1>
+    <h1>Top Trumps Europe</h1>
+    {{> createGame}}
+    <h2>Join Game</h2>
+    <h3>Available games:</h3>
     <div>
       {{#each games}}
         {{> game}}
+      {{else}}
+        No one's playing. Why don't you start a trend...
       {{/each}}
     </div>
 

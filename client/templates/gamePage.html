@@ -1,5 +1,12 @@
 <template name="gamePage">
+  <h1>This is the game: {{name}}</h1>
   <div>
-    {{> game}}
+    <!--{{> game}}-->
+    <div class="row">
+      <div class="col-md-2">Game: {{name}}</div>
+      <div class="col-md-2">Games Master: {{owner.username}}</div>
+      <div class="col-md-2">Players: {{owner.username}}</div>
+      <div class="col-md-2"><a href="{{pathFor 'frontPage'}}" class="btn btn-danger">End Game</a></div>
+    </div>
   </div>
 </template>

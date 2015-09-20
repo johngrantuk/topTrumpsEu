@@ -1,22 +1,14 @@
 Meteor.methods({
-  UpdateTopicVariables: function(TopicId) {                    // Called when a Topic is clicked. Will update the Variable names and questions for a Topic.
 
-    console.log("\nUpdateTopicVariables()\n");
+  RemoveGame: function(OwnerId){
+    Games.remove({ownerId: OwnerId});
+  },
 
-    TopicVariables.remove({});                                 // Clear old Variables.
+  RemoveUser: function(UserId){
+    Meteor.users.remove(UserId);
+  },
 
-    var variableResponse = Eqls.getTopicVariables(TopicId);       // Make API call. Will return an object of variables.
-
-    variableResponse.forEach(function(variable) {
-
-      TopicVariables.insert({
-        variableLabel: variable.variableLabel,
-        question: variable.question,
-        variableId: variable.variableId,
-        categories: variable.categories
-      });
-
-    });
-
+  AddGameId: function(UserId, GameId){
+    Meteor.users.update({ _id: UserId }, {$set : { 'profile.gameId': GameId }});
   }
 });
