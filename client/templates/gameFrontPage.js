@@ -21,6 +21,45 @@ Template.gameFrontPage.helpers({
     }
 
     return false;
+  },
+
+  isGameStarted: function(){
+    var game = Games.findOne(this._id);
+
+    return game.isStarted;
+  },
+
+  isYourTurn: function(){
+    var playerNo = Meteor.user().profile.playerNo;
+    console.log("gameFrontPage, You are playerNo: " + playerNo);
+
+    if(playerNo == this.playerTurn)
+      return true;
+    else
+      return false;
   }
+
+});
+
+Template.gameFrontPage.events({
+  'click #startGame': function(e) {
+
+    e.preventDefault();
+
+
+    Meteor.call('SetGameStarted', this._id, true);                              // Owner has started game so set to true.
+
+  },
+  
+  'click #takeTurn': function(e) {
+
+    e.preventDefault();
+
+    console.log("Taking turn! " + this._id);
+
+    Meteor.call('SetNextTurn', this.playerTurn, this._id);                              // Move to the next players turn.
+
+  }
+
 
 });

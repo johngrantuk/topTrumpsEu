@@ -11,6 +11,12 @@ Template.game.events({
     }
 
     Accounts.createUser(user, function(error){                      // Create a new user, this function also logs them in.
+
+      var noPlayers = Meteor.users.find({"profile.gameId": this._id}).count();
+
+      console.log("Number of players: " + noPlayers);
+
+      Meteor.call('AddPlayerNo', Meteor.userId(), noPlayers);        // Add player number to user.
       Meteor.call('AddGameId', Meteor.userId(), gameId);            // User will be part of the game.
     });
 
