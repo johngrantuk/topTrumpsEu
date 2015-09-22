@@ -1,0 +1,14 @@
+<template name="countryStats">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h3>{{name}}</h3>
+      {{#each stats}}
+        {{> stat}}
+      {{/each}}
+    </div>
+  </div>
+</template>
+
+<template name="stat">
+  <h4>{{name}}: {{value}}</h4>
+</template>

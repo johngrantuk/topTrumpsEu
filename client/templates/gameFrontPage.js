@@ -31,12 +31,25 @@ Template.gameFrontPage.helpers({
 
   isYourTurn: function(){
     var playerNo = Meteor.user().profile.playerNo;
-    console.log("gameFrontPage, You are playerNo: " + playerNo);
+    //console.log("gameFrontPage, You are playerNo: " + playerNo);
 
-    if(playerNo == this.playerTurn)
+    if(playerNo == this.playerTurn){
+      Session.set("yourTurn", true);
       return true;
-    else
+    }
+    else{
+      Session.set("yourTurn", false);
       return false;
+    }
+  },
+
+  playersTurn: function(){
+    var player = Meteor.users.findOne({"profile.playerNo": this.playerTurn});
+    return player.username;
+  },
+
+  playerCountry: function(){
+    return Meteor.user().profile.countries[0];
   }
 
 });
@@ -45,21 +58,29 @@ Template.gameFrontPage.events({
   'click #startGame': function(e) {
 
     e.preventDefault();
+    AllocateCountries(this._id);                                                          // Allocate users fair share of countries.
 
-
-    Meteor.call('SetGameStarted', this._id, true);                              // Owner has started game so set to true.
-
-  },
-  
-  'click #takeTurn': function(e) {
-
-    e.preventDefault();
-
-    console.log("Taking turn! " + this._id);
-
-    Meteor.call('SetNextTurn', this.playerTurn, this._id);                              // Move to the next players turn.
-
+    Meteor.call('SetGameStarted', this._id, true);                                      // Owner has started game so set to true.
   }
 
-
 });
+
+function AllocateCountries(GameId){
+  console.log("AllocateCountries() " + GameId);
+
+  var gamePlayers = Meteor.users.find({"profile.gameId": GameId}).fetch();
+
+  var countries = TestCountries.find();
+
+  var playerIndex = 0;
+
+  countries.forEach(function(country) {
+
+    Meteor.call('AddCountryToPlayer', gamePlayers[playerIndex]._id, country);
+
+    playerIndex++;
+    if(playerIndex >= gamePlayers.length)
+      playerIndex = 0;
+
+  });
+}

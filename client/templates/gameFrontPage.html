@@ -1,31 +1,65 @@
 <template name="gameFrontPage">
-  <h1>This is the game front page: {{name}}</h1>
-  <div>
-    {{#if isGameStarted}}
-      The game has started!
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h1>Playing the game: {{name}}</h1>
+    </div>
+  </div>
+  {{#with this}}
+    {{> log}}
+  {{/with}}
+      <div>
+        {{#if isGameStarted}}
 
-      {{#if isYourTurn}}
-        <input id="takeTurn" type="submit" value="Take Turn" class="btn btn-success"/>
-      {{/if}}
+          {{#if isYourTurn}}
 
-    {{else}}
+            <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+                <h2>It's your turn!</h2>
+                <h3>Select a stat and take your shot.</h3>
+              </div>
+            </div>
 
-      {{#if isOwner}}
-        {{#if readyToPlay}}
-          {{#each players}}
-            <h4>{{username}} has joined...</h4>
-          {{/each}}
-          <h3>You have enough players so get to it!</h3>
-          <input id="startGame" type="submit" value="Start Game" class="btn btn-success"/>
+            {{#with playerCountry}}
+              {{> countryStats}}
+            {{/with}}
+
+
+          {{else}}
+
+            <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+                <h2>Waiting for {{playersTurn}} to take their turn</h2>
+              </div>
+            </div>
+
+            {{#with playerCountry}}
+              {{> countryStats}}
+            {{/with}}
+
+          {{/if}}
+
+          {{#if isYourTurn}}
+            {{#with this}}
+              {{> modal}}
+            {{/with}}
+          {{/if}}
         {{else}}
-          <h3>Waiting for some other players to join.</h3>
+
+          {{#if isOwner}}
+            {{#if readyToPlay}}
+              {{#each players}}
+                <h4>{{username}} has joined...</h4>
+              {{/each}}
+              <h3>You have enough players so get to it!</h3>
+              <input id="startGame" type="submit" value="Start Game" class="btn btn-success"/>
+            {{else}}
+              <h3>Waiting for some other players to join.</h3>
+            {{/if}}
+          {{else}}
+            <h3>Be patient, we're waiting for {{owner.username}} to start the game...</h3>
+            <a href="{{pathFor 'frontPage'}}" class="btn btn-danger">End Game</a>
+          {{/if}}
+
         {{/if}}
-      {{else}}
-        <h3>Be patient, we're waiting for {{owner.username}} to start the game...</h3>
-        <a href="{{pathFor 'frontPage'}}" class="btn btn-danger">End Game</a>
-      {{/if}}
-
-    {{/if}}
-
   </div>
 </template>
