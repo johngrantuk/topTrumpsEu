@@ -9,6 +9,12 @@
   {{/with}}
       <div>
         {{#if isGameStarted}}
+        
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+              <h1>Country Count: {{countryCount}}</h1>
+            </div>
+          </div>
 
           {{#if isYourTurn}}
 
@@ -43,6 +49,7 @@
               {{> modal}}
             {{/with}}
           {{/if}}
+
         {{else}}
 
           {{#if isOwner}}

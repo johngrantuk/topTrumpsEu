@@ -50,6 +50,22 @@ Template.gameFrontPage.helpers({
 
   playerCountry: function(){
     return Meteor.user().profile.countries[0];
+  },
+
+  countryCount: function(){
+    var countryCount =  Meteor.users.findOne(Meteor.userId()).profile.countries.length;
+
+    console.log(countryCount);
+
+    if(countryCount === 0){                                                                 // Check if current user has lost all their countries.
+      Router.go('gameLostPage');                                                     // Redirect to loosing page.
+    }
+    else if(countryCount === TestCountries.find().count()){                                 // Check if current user has got all the countries.
+
+      Router.go('gameWonPage');                                                     // Redirect to winner page.
+    }
+
+    return countryCount;
   }
 
 });
