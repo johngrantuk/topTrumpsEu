@@ -17,7 +17,7 @@ Template.game.events({
       console.log("Number of players: " + noPlayers);
 
       Meteor.call('AddPlayerNo', Meteor.userId(), noPlayers);        // Add player number to user.
-      Meteor.call('AddGameId', Meteor.userId(), gameId);            // User will be part of the game.
+      Meteor.call('AddGameId', Meteor.userId(), gameId, user.username);            // User will be part of the game.
     });
 
     Router.go('gameFrontPage', this);

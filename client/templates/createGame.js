@@ -21,7 +21,7 @@ Template.createGame.events({
       game._id = Games.insert(game);
 
       Meteor.call('AddPlayerNo', Meteor.userId(), 0);        // Add player number to user.
-      Meteor.call('AddGameId', Meteor.userId(), game._id);            // User will be part of the game.
+      Meteor.call('AddGameId', Meteor.userId(), game._id, user.username);            // User will be part of the game.
 
       Router.go('gameFrontPage', game);
     });

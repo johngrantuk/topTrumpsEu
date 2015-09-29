@@ -1,14 +1,16 @@
 <template name="log">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <h2>The Story so far...</h2>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h1 class="panel-title">The Story so far...</h1>
+    </div>
+
+    <div class="panel-body">
+      {{#each logs}}
+          <h5>{{entry}}</h5>
+          <hr>
+      {{/each}}
     </div>
   </div>
-  {{#each logs}}
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-          {{entry}}
-      </div>
-    </div>
-  {{/each}}
+
 </template>

@@ -1,0 +1,26 @@
+<template name="yourTurn">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h1 class="panel-title">Playing the game: {{name}}</h1>
+    </div>
+
+    <div class="panel-body">
+      <h2>It's your turn!</h2>
+      <h3>You have {{countryCount}} countries</h3>
+      <h3>Select a stat and take your shot</h3>
+    </div>
+  </div>
+</template>
+
+<template name="notYourTurn">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h1 class="panel-title">Playing the game: {{name}}</h1>
+    </div>
+
+    <div class="panel-body">
+      <h2>Waiting for {{playersTurn}} to take their turn</h2>
+      <h3>You have {{countryCount}} countries</h3>
+    </div>
+  </div>
+</template>

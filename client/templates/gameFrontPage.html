@@ -1,72 +1,59 @@
 <template name="gameFrontPage">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <h1>Playing the game: {{name}}</h1>
-    </div>
-  </div>
-  {{#with this}}
-    {{> log}}
-  {{/with}}
-      <div>
-        {{#if isGameStarted}}
-        
-          <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-              <h1>Country Count: {{countryCount}}</h1>
-            </div>
+
+  <div class="col-md-6">
+
+      {{#if isGameStarted}}
+
+
+        {{#if isYourTurn}}
+          {{#with this}}
+          {{> yourTurn}}
+          {{/with}}
+        {{else}}
+          {{> notYourTurn}}
+        {{/if}}
+
+
+        {{#with playerCountry}}
+          {{> countryStats}}
+        {{/with}}
+
+        {{#if isYourTurn}}
+          {{#with this}}
+            {{> modal}}
+          {{/with}}
+        {{/if}}
+
+      {{else}}
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h1 class="panel-title">{{name}}</h1>
           </div>
 
-          {{#if isYourTurn}}
-
-            <div class="row">
-              <div class="col-md-6 col-md-offset-3">
-                <h2>It's your turn!</h2>
-                <h3>Select a stat and take your shot.</h3>
-              </div>
-            </div>
-
-            {{#with playerCountry}}
-              {{> countryStats}}
-            {{/with}}
-
-
-          {{else}}
-
-            <div class="row">
-              <div class="col-md-6 col-md-offset-3">
-                <h2>Waiting for {{playersTurn}} to take their turn</h2>
-              </div>
-            </div>
-
-            {{#with playerCountry}}
-              {{> countryStats}}
-            {{/with}}
-
-          {{/if}}
-
-          {{#if isYourTurn}}
-            {{#with this}}
-              {{> modal}}
-            {{/with}}
-          {{/if}}
-
-        {{else}}
-
-          {{#if isOwner}}
-            {{#if readyToPlay}}
-              {{#each players}}
-                <h4>{{username}} has joined...</h4>
-              {{/each}}
-              <h3>You have enough players so get to it!</h3>
-              <input id="startGame" type="submit" value="Start Game" class="btn btn-success"/>
+          <div class="panel-body">
+            {{#if isOwner}}
+              {{#if readyToPlay}}
+                <h3>You have enough players so get to it!</h3>
+                <input id="startGame" type="submit" value="Start Game" class="btn btn-success"/>
+              {{else}}
+                <h3>Waiting for some other players to join...</h3>
+              {{/if}}
             {{else}}
-              <h3>Waiting for some other players to join.</h3>
+              <h3>Be patient, we're waiting for {{owner.username}} to start the game...</h3>
+              <a href="{{pathFor 'frontPage'}}" class="btn btn-danger">End Game</a>
             {{/if}}
-          {{else}}
-            <h3>Be patient, we're waiting for {{owner.username}} to start the game...</h3>
-            <a href="{{pathFor 'frontPage'}}" class="btn btn-danger">End Game</a>
-          {{/if}}
+          </div>
+        </div>
 
-        {{/if}}
+      {{/if}}
   </div>
+
+  <div class="col-md-6">
+    {{#with this}}
+      {{> log}}
+    {{/with}}
+  </div>
+
+
 </template>

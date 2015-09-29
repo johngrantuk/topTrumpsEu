@@ -1,7 +1,10 @@
 <template name="countryStats">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <h3>{{name}}</h3>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h1 class="panel-title">{{name}}</h1>
+    </div>
+
+    <div class="panel-body">
       {{#each stats}}
         {{> stat}}
       {{/each}}
@@ -10,5 +13,8 @@
 </template>
 
 <template name="stat">
-  <h4>{{name}}: {{value}}</h4>
+  <h4>{{name}}</h4>
+  <h5>{{variableQuestion}}</h5>
+  <h5>{{categoryLabel}}: {{value}}</h5>
+  <hr>
 </template>

@@ -1,5 +1,36 @@
 Meteor.methods({
 
+  LoadCountriesApi: function(){                                                     // Loads countries and data from API.
+    console.log("LoadCountriesApi:");
+
+    Countries.remove({});                                                           // Clears the array.
+
+    allCountries = Eqls.getCountryArray();                                          // Gets the countries.
+
+    allCountries.forEach(function(country) {                                        // For each country add some info.
+
+      console.log("Adding info for: " + country.name);
+      var infoArray = [];
+
+      // TopicId, VariableIndex, CategoryIndex, DataIndex, CountryValue
+      infoArray.push(GetSomeInfo(9, 1, 4, 0, country.categoryValue));         // Personal financial situation
+      infoArray.push(GetSomeInfo(9, 3, 0, 0, country.categoryValue));         // Can afford to keep home adequately warm?
+      infoArray.push(GetSomeInfo(3, 0, 3, 0, country.categoryValue));
+      infoArray.push(GetSomeInfo(8, 0, 0, 1, country.categoryValue));         // Employed (includes on leave)
+      infoArray.push(GetSomeInfo(10, 0, 2, 1, country.categoryValue));        // Health
+      infoArray.push(GetSomeInfo(16, 0, 1, 1, country.categoryValue));        // I am optimistic about the future
+      //infoArray.push(GetSomeInfo(14, 0, 2, 1, country.categoryValue));        // How often felt cheerful and in good spirits last 2 weeks?
+      //infoArray.push(GetSomeInfo(15, 4, 2, 1, country.categoryValue));        // Working hours fit with family/social commitments?
+
+      Countries.insert({
+        name: country.name,
+        stats: infoArray
+      });
+
+    });
+
+  },
+
   RemoveGame: function(OwnerId){
     Games.remove({ownerId: OwnerId});                                                 // Removes a game by owner id
   },
@@ -8,8 +39,9 @@ Meteor.methods({
     Meteor.users.remove(UserId);
   },
 
-  AddGameId: function(UserId, GameId){
+  AddGameId: function(UserId, GameId, PlayerName){
     Meteor.users.update({ _id: UserId }, {$set : { 'profile.gameId': GameId }});      // Update a user with id of game they are in.
+    Games.update({ _id: GameId }, { "$push" : {'log': {'entry': PlayerName + " joined."}}});
   },
 
   AddPlayerNo: function(UserId, PlayerNo){

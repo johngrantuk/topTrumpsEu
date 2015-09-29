@@ -1,0 +1,64 @@
+<template name="gameFrontPageOld">
+  <!--
+
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h1 class="panel-title">Playing the game: {{name}}</h1>
+    </div>
+
+    {{#if isGameStarted}}
+      <div class="panel-body">
+      {{#if isYourTurn}}
+        <h2>It's your turn!</h2>
+        <h3>You have {{countryCount}} countries</h3>
+        <h3>Select a stat and take your shot</h3>
+      {{else}}
+        <h2>Waiting for {{playersTurn}} to take their turn</h2>
+        <h3>You have {{countryCount}} countries</h3>
+      {{/if}}
+      </div>
+  </div>
+
+      {{#with playerCountry}}
+        {{> countryStats}}
+      {{/with}}
+
+      {{#if isYourTurn}}
+        {{#with this}}
+          {{> modal}}
+        {{/with}}
+      {{/if}}
+
+    {{else}}
+
+      <div class="row">
+        {{#if isOwner}}
+          {{#if readyToPlay}}
+            <h3>You have enough players so get to it!</h3>
+            <input id="startGame" type="submit" value="Start Game" class="btn btn-success"/>
+          {{else}}
+            <h3>Waiting for some other players to join.</h3>
+          {{/if}}
+        {{else}}
+          <h3>Be patient, we're waiting for {{owner.username}} to start the game...</h3>
+          <a href="{{pathFor 'frontPage'}}" class="btn btn-danger">End Game</a>
+        {{/if}}
+      </div>
+
+    {{/if}}
+</div>
+
+  <div class="col-md-6">
+
+      <div class="row">
+
+        {{#with this}}
+          {{> log}}
+        {{/with}}
+      </div>
+
+  </div>
+-->
+
+</template>

@@ -54,15 +54,27 @@ Template.gameFrontPage.helpers({
 
   countryCount: function(){
     var countryCount =  Meteor.users.findOne(Meteor.userId()).profile.countries.length;
+    var playerCount = Meteor.users.find({"profile.gameId": this._id}).count();
 
     console.log(countryCount);
 
     if(countryCount === 0){                                                                 // Check if current user has lost all their countries.
       Router.go('gameLostPage');                                                     // Redirect to loosing page.
     }
-    else if(countryCount === TestCountries.find().count()){                                 // Check if current user has got all the countries.
+    else if(countryCount === Countries.find().count()){                                 // Check if current user has got all the countries.
 
       Router.go('gameWonPage');                                                     // Redirect to winner page.
+    }
+
+    console.log("Player Count: " + playerCount);
+    if(playerCount < 2){
+
+      //if(Meteor.users.findOne(Meteor.userId()).profile.gameId === this._id)
+        Router.go('gameWonPage');
+      //else {
+    //    Router.go('gameLostPage');
+      //}
+
     }
 
     return countryCount;
@@ -84,18 +96,19 @@ Template.gameFrontPage.events({
 function AllocateCountries(GameId){
   console.log("AllocateCountries() " + GameId);
 
-  var gamePlayers = Meteor.users.find({"profile.gameId": GameId}).fetch();
+  var gamePlayers = Meteor.users.find({"profile.gameId": GameId}).fetch();            // Finds all players in the current game.
 
-  var countries = TestCountries.find();
+  //var countries = TestCountries.find();                                               // Finds all countries in test collection.
+  var countries = Countries.find();
 
   var playerIndex = 0;
 
-  countries.forEach(function(country) {
+  countries.forEach(function(country) {                                               // Iterate each country.
 
-    Meteor.call('AddCountryToPlayer', gamePlayers[playerIndex]._id, country);
+    Meteor.call('AddCountryToPlayer', gamePlayers[playerIndex]._id, country);         // Adds country to player.profile.countries[]
 
-    playerIndex++;
-    if(playerIndex >= gamePlayers.length)
+    playerIndex++;                                                                    // Moves to next player.
+    if(playerIndex >= gamePlayers.length)                                             // If been through each player move back to start.
       playerIndex = 0;
 
   });

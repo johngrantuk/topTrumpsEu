@@ -1,5 +1,10 @@
 Meteor.startup(function () {
 
+  if(Countries.find().count() === 0){
+    console.log("Loading countries");
+    Meteor.call('LoadCountriesApi');
+  }
+
   if(TestCountries.find().count() === 0){
 
     TestCountries.insert({
